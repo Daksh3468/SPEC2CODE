@@ -8,22 +8,79 @@ Pull Request — with real tests, real pass/fail results, and a live auto-fix de
 
 ---
 
+## Architecture Diagram
+
+```mermaid
+flowchart TD
+    A([📄 Requirements Document\nPDF / DOCX]) --> B
+
+    subgraph PIPELINE["🚀 Spec2Code Pipeline — orchestrator/pipeline.py"]
+        direction TB
+
+        B["📄 Stage 1\nExtract Requirements\ns1_extract_requirements.py\n─────────────────────\nReads requirements_index.json\nOutputs 20 REQ structs"]
+
+        B --> C["🏗 Stage 2\nAnalyze Codebase\ns2_analyze_codebase.py\n─────────────────────\nAST-walks ecommerce_stub/app/\n18 files · 16 classes · 20 stubs\nWrites codebase_map.json"]
+
+        C --> D["🤖 Stage 3\nCode Generation Agent\ns3_generate_code.py\n─────────────────────\nApplies code patches\nOrderService ✅  PaymentService ✅\nInventoryService ✅\nNotificationService ⏭ DEFERRED"]
+
+        D --> E["🧪 Stage 4\nTest Generation Agent\ns4_generate_tests.py\n─────────────────────\n22 tests written across\n3 test modules\nREQ-017 tests present but will FAIL"]
+
+        E --> F["🔬 Stage 5\nRun Tests\ns5_run_tests.py\n─────────────────────\npytest ecommerce_stub/tests/ -v\nFirst pass: 17 passed · 5 failed"]
+
+        F --> G["🔍 Stage 6\nRequirement Verification\ns6_verify_requirements.py\n─────────────────────\nMaps tests → REQ-IDs\n18 PASS · 2 FAIL\nWrites verification_result.json"]
+
+        G --> H{All REQs\nverified?}
+
+        H -- "✅ Yes" --> I
+
+        H -- "❌ No\nREQ-008 · REQ-017 FAIL" --> J["⚡ Stage 7\nAuto-Fix Agent\ns7_autofix.py\n─────────────────────\nDiagnoses failures\nApplies notification_service_patch.py\nRe-runs Stage 5 + Stage 6\n22 passed · 0 failed\n20/20 PASS"]
+
+        J --> I["✅ Stage 8\nGenerate Report + PR\ns8_generate_report.py\n─────────────────────\ntraceability_report.md\npr_summary.md · PR #127"]
+    end
+
+    I --> K([📊 output/traceability_report.md\n20 REQs · all PASS])
+    I --> L([🔗 output/pr_summary.md\nPR #127 · feat/spec2code-auto])
+    I --> M([📋 verification_result.json\nMachine-readable REQ map])
+
+    style A fill:#e8f4fd,stroke:#3b82d4,color:#1f2328
+    style PIPELINE fill:#f7f8fa,stroke:#e5e7eb,color:#1f2328
+    style B fill:#dbeafe,stroke:#3b82f6,color:#1f2328
+    style C fill:#dbeafe,stroke:#3b82f6,color:#1f2328
+    style D fill:#dbeafe,stroke:#3b82f6,color:#1f2328
+    style E fill:#dbeafe,stroke:#3b82f6,color:#1f2328
+    style F fill:#dbeafe,stroke:#3b82f6,color:#1f2328
+    style G fill:#fef3c7,stroke:#f59e0b,color:#1f2328
+    style H fill:#fef9c3,stroke:#eab308,color:#1f2328
+    style J fill:#fee2e2,stroke:#ef4444,color:#1f2328
+    style I fill:#dcfce7,stroke:#22c55e,color:#1f2328
+    style K fill:#dcfce7,stroke:#22c55e,color:#1f2328
+    style L fill:#dcfce7,stroke:#22c55e,color:#1f2328
+    style M fill:#dcfce7,stroke:#22c55e,color:#1f2328
+```
+
+> **Stage 6 (yellow) is the core innovation** — it doesn't just check if pytest passes.
+> It maps every test back to the REQ-ID it covers. If a requirement has no passing test,
+> it's `FAIL` regardless of the overall suite result. That's what catches REQ-017.
+
+---
+
 ## Table of Contents
 
-1. [The Problem](#the-problem)
-2. [What It Does](#what-it-does)
-3. [How It Works](#how-it-works)
-4. [Tech Stack](#tech-stack)
-5. [How IBM Bob 2.0 Built This](#how-ibm-bob-20-built-this)
-6. [Pipeline Stages — Detail](#pipeline-stages--detail)
-7. [Demo Project: ShopFlow E-Commerce](#demo-project-shopflow-e-commerce)
-8. [Real Pipeline Results](#real-pipeline-results)
-9. [Prerequisites & Quick Start](#prerequisites--quick-start)
-10. [Expected Console Output](#expected-console-output)
-11. [Project Structure](#project-structure)
-12. [Sample Outputs](#sample-outputs)
-13. [Limitations](#limitations)
-14. [Winning Message](#winning-message)
+1. [Architecture Diagram](#architecture-diagram)
+2. [The Problem](#the-problem)
+3. [What It Does](#what-it-does)
+4. [How It Works](#how-it-works)
+5. [Tech Stack](#tech-stack)
+6. [How IBM Bob 2.0 Built This](#how-ibm-bob-20-built-this)
+7. [Pipeline Stages — Detail](#pipeline-stages--detail)
+8. [Demo Project: ShopFlow E-Commerce](#demo-project-shopflow-e-commerce)
+9. [Real Pipeline Results](#real-pipeline-results)
+10. [Prerequisites & Quick Start](#prerequisites--quick-start)
+11. [Expected Console Output](#expected-console-output)
+12. [Project Structure](#project-structure)
+13. [Sample Outputs](#sample-outputs)
+14. [Limitations](#limitations)
+15. [Winning Message](#winning-message)
 
 ---
 
