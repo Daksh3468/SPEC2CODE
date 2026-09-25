@@ -1,0 +1,99 @@
+﻿# ─── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+
+# ─── Virtual environments ─────────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.env/
+.virtualenv/
+
+# ─── Distribution / packaging ─────────────────────────────────────────────────
+build/
+dist/
+*.egg-info/
+*.egg
+.eggs/
+MANIFEST
+
+# ─── pytest / test artifacts ──────────────────────────────────────────────────
+.pytest_cache/
+.cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+nosetests.xml
+test-results/
+
+# ─── Type checkers ────────────────────────────────────────────────────────────
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+
+# ─── Linters / formatters ─────────────────────────────────────────────────────
+.ruff_cache/
+
+# ─── Environment / secrets ────────────────────────────────────────────────────
+.env
+.env.*
+*.env
+!.env.example
+secrets.json
+secrets.yaml
+
+# ─── IDEs and editors ─────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ─── OS artifacts ─────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+Thumbs.db
+
+# ─── Jupyter ──────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ─── Spec2Code — generated pipeline outputs ───────────────────────────────────
+# Produced on every pipeline run; do not commit generated artefacts.
+output/traceability_report.md
+output/pr_summary.md
+orchestrator/data/codebase_map.json
+orchestrator/data/verification_result.json
+
+# ─── Spec2Code — patched service files (reset on each run) ────────────────────
+# Live service files are overwritten by the pipeline.
+# Only the original stubs and patch templates are source-controlled.
+ecommerce_stub/app/services/order_service.py
+ecommerce_stub/app/services/payment_service.py
+ecommerce_stub/app/services/inventory_service.py
+ecommerce_stub/app/services/notification_service.py
+
+# ─── Spec2Code — generated test files ────────────────────────────────────────
+# Test files are written by Stage 4; only the templates are source-controlled.
+ecommerce_stub/tests/test_order_service.py
+ecommerce_stub/tests/test_notification_service.py
+ecommerce_stub/tests/test_payment_service.py
+
+# ─── Bob / IBM tooling ────────────────────────────────────────────────────────
+.bob/

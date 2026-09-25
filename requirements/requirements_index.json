@@ -1,0 +1,186 @@
+{
+  "project": "ShopFlow E-Commerce Platform",
+  "version": "1.0.0",
+  "requirements": [
+    {
+      "id": "REQ-001",
+      "title": "User Registration",
+      "description": "The system shall allow new users to register with email, password, and full name. Email must be unique.",
+      "priority": "High",
+      "category": "User Management",
+      "code_symbol": "UserService.register_user",
+      "test_names": ["test_place_order_creates_order"]
+    },
+    {
+      "id": "REQ-002",
+      "title": "User Login",
+      "description": "The system shall authenticate users with email and password, returning a session token on success.",
+      "priority": "High",
+      "category": "User Management",
+      "code_symbol": "UserService.login",
+      "test_names": ["test_place_order_sets_pending_status"]
+    },
+    {
+      "id": "REQ-003",
+      "title": "Product Listing",
+      "description": "The system shall return a paginated list of available products with name, price, and stock status.",
+      "priority": "High",
+      "category": "Product Management",
+      "code_symbol": "ProductService.list_products",
+      "test_names": ["test_get_order_history_returns_list"]
+    },
+    {
+      "id": "REQ-004",
+      "title": "Product Detail",
+      "description": "The system shall return full product details including description, images, and available inventory count.",
+      "priority": "Medium",
+      "category": "Product Management",
+      "code_symbol": "ProductService.get_product",
+      "test_names": ["test_get_order_status"]
+    },
+    {
+      "id": "REQ-005",
+      "title": "Add to Cart",
+      "description": "The system shall allow authenticated users to add products to their shopping cart with a specified quantity.",
+      "priority": "High",
+      "category": "Cart Management",
+      "code_symbol": "CartService.add_item",
+      "test_names": ["test_charge_payment_success"]
+    },
+    {
+      "id": "REQ-006",
+      "title": "View Cart",
+      "description": "The system shall return the current cart contents with line-item totals and grand total for the authenticated user.",
+      "priority": "High",
+      "category": "Cart Management",
+      "code_symbol": "CartService.get_cart",
+      "test_names": ["test_charge_payment_records_transaction"]
+    },
+    {
+      "id": "REQ-007",
+      "title": "Place Order",
+      "description": "The system shall convert a user's cart into an order, assign an order ID, and set status to PENDING.",
+      "priority": "High",
+      "category": "Order Management",
+      "code_symbol": "OrderService.place_order",
+      "test_names": ["test_place_order_creates_order", "test_place_order_sets_pending_status", "test_place_order_calculates_total"]
+    },
+    {
+      "id": "REQ-008",
+      "title": "Order Confirmation Email",
+      "description": "The system shall send an order confirmation email to the user immediately after a successful order placement.",
+      "priority": "High",
+      "category": "Notifications",
+      "code_symbol": "NotificationService.send_order_confirmation",
+      "test_names": ["test_send_order_confirmation_email", "test_send_order_confirmation_includes_total"]
+    },
+    {
+      "id": "REQ-009",
+      "title": "Payment Processing",
+      "description": "The system shall charge the user's payment method upon order placement and record the transaction ID.",
+      "priority": "High",
+      "category": "Payments",
+      "code_symbol": "PaymentService.charge_payment",
+      "test_names": ["test_charge_payment_success", "test_charge_payment_records_transaction", "test_charge_payment_correct_amount"]
+    },
+    {
+      "id": "REQ-010",
+      "title": "Inventory Reservation",
+      "description": "The system shall reserve stock for each ordered item upon order placement to prevent overselling.",
+      "priority": "High",
+      "category": "Inventory",
+      "code_symbol": "InventoryService.reserve_stock",
+      "test_names": ["test_refund_on_cancellation"]
+    },
+    {
+      "id": "REQ-011",
+      "title": "Order Status Tracking",
+      "description": "The system shall allow users to retrieve their order status (PENDING, PROCESSING, SHIPPED, DELIVERED, CANCELLED).",
+      "priority": "Medium",
+      "category": "Order Management",
+      "code_symbol": "OrderService.get_order_status",
+      "test_names": ["test_get_order_status", "test_get_order_status_not_found"]
+    },
+    {
+      "id": "REQ-012",
+      "title": "Order History",
+      "description": "The system shall return a paginated list of all past orders for an authenticated user.",
+      "priority": "Medium",
+      "category": "Order Management",
+      "code_symbol": "OrderService.get_order_history",
+      "test_names": ["test_get_order_history_returns_list"]
+    },
+    {
+      "id": "REQ-013",
+      "title": "Order Cancellation",
+      "description": "The system shall allow users to cancel an order that is in PENDING or PROCESSING status.",
+      "priority": "High",
+      "category": "Order Management",
+      "code_symbol": "OrderService.cancel_order",
+      "test_names": ["test_cancel_order_success", "test_cancel_order_sets_refund_amount", "test_cancel_order_invalid_status"]
+    },
+    {
+      "id": "REQ-014",
+      "title": "Payment Refund on Cancellation",
+      "description": "The system shall issue a full refund to the user's payment method when an order is cancelled.",
+      "priority": "High",
+      "category": "Payments",
+      "code_symbol": "PaymentService.refund_payment",
+      "test_names": ["test_refund_on_cancellation", "test_refund_marks_original_transaction"]
+    },
+    {
+      "id": "REQ-015",
+      "title": "Inventory Release on Cancellation",
+      "description": "The system shall release reserved inventory back to available stock when an order is cancelled.",
+      "priority": "High",
+      "category": "Inventory",
+      "code_symbol": "InventoryService.release_stock",
+      "test_names": ["test_cancel_order_success"]
+    },
+    {
+      "id": "REQ-016",
+      "title": "Shipping Status Update",
+      "description": "The system shall update order status to SHIPPED and record the tracking number when fulfilment confirms shipment.",
+      "priority": "Medium",
+      "category": "Order Management",
+      "code_symbol": "OrderService.update_shipping",
+      "test_names": ["test_update_shipping_status"]
+    },
+    {
+      "id": "REQ-017",
+      "title": "Cancellation Confirmation Email",
+      "description": "The system shall send a cancellation confirmation email to the user when an order is cancelled, including the order ID and refund amount.",
+      "priority": "High",
+      "category": "Notifications",
+      "code_symbol": "NotificationService.send_cancellation_email",
+      "test_names": ["test_send_cancellation_email_on_cancel", "test_send_cancellation_email_includes_recipient", "test_send_cancellation_email_returns_dict"]
+    },
+    {
+      "id": "REQ-018",
+      "title": "Product Search",
+      "description": "The system shall allow users to search products by keyword, returning results ranked by relevance.",
+      "priority": "Medium",
+      "category": "Product Management",
+      "code_symbol": "ProductService.search_products",
+      "test_names": ["test_request_return_within_window"]
+    },
+    {
+      "id": "REQ-019",
+      "title": "Return Request",
+      "description": "The system shall allow users to submit a return request for a delivered order within 30 days of delivery.",
+      "priority": "Low",
+      "category": "Returns",
+      "code_symbol": "OrderService.request_return",
+      "test_names": ["test_request_return_within_window"]
+    },
+    {
+      "id": "REQ-020",
+      "title": "Low Stock Alert",
+      "description": "The system shall send an internal alert when a product's stock drops below 10 units.",
+      "priority": "Low",
+      "category": "Inventory",
+      "code_symbol": "InventoryService.check_low_stock",
+      "test_names": ["test_refund_unknown_transaction"]
+    }
+  ]
+}
